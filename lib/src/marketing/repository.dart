@@ -207,19 +207,19 @@ class MarketingRepositories {
         successCode: 200) as FutureOr<Map<String, dynamic>?>;
   }
 
-  Future<Map<String, dynamic>?> addEmailSubscriber(
+  Future<Map<String, dynamic>> addEmailSubscriber(
       String id, String emailId, String emailAddress) async {
     var queryParameters = {'email_address': emailAddress};
     return apiRequest(RequestType.POST,
         '/3.0${Endpoint.emailSubscribers(id, emailId)}', queryParameters,
-        successCode: 200) as FutureOr<Map<String, dynamic>?>;
+        successCode: 200) as FutureOr<Map<String, dynamic>>;
   }
 
-  Future<Map<String, dynamic>?> getEmailSubscriber(
+  Future<Map<String, dynamic>> getEmailSubscriber(
       String id, String emailId, String subscriberHash) async {
     return apiRequest(RequestType.GET,
         '/3.0${Endpoint.getEmailSubscriber(id, emailId, subscriberHash)}', {},
-        successCode: 200) as FutureOr<Map<String, dynamic>?>;
+        successCode: 200) as FutureOr<Map<String, dynamic>>;
   }
 
   Future<Map<String, dynamic>?> getRemovedSubscribers(String id) async {
