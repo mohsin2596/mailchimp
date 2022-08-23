@@ -1,13 +1,13 @@
 class BatchOperation {
-  String id;
-  String status;
-  int total_operations;
-  int finished_operations;
-  int errored_operations;
-  String submitted_at;
-  String completed_at;
-  String response_body_url;
-  List<Map<String, String>> _links;
+  String? id;
+  String? status;
+  int? total_operations;
+  int? finished_operations;
+  int? errored_operations;
+  String? submitted_at;
+  String? completed_at;
+  String? response_body_url;
+  List<Map<String, String>>? _links;
 
 
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
@@ -22,20 +22,20 @@ class BatchOperation {
     this.submitted_at,
     this.completed_at,
     this.response_body_url,
-    List<Map<String, String>> links,
+    List<Map<String, String>>? links,
   }) : _links = links;
 
 
   BatchOperation copyWith({
-    String id,
-    String status,
-    int total_operations,
-    int finished_operations,
-    int errored_operations,
-    String submitted_at,
-    String completed_at,
-    String response_body_url,
-    List<Map<String, String>> links,
+    String? id,
+    String? status,
+    int? total_operations,
+    int? finished_operations,
+    int? errored_operations,
+    String? submitted_at,
+    String? completed_at,
+    String? response_body_url,
+    List<Map<String, String>>? links,
   }) {
     return new BatchOperation(
       id: id ?? this.id,
@@ -89,15 +89,15 @@ class BatchOperation {
 
   factory BatchOperation.fromMap(Map<String, dynamic> map) {
     return new BatchOperation(
-      id: map['id'] as String,
-      status: map['status'] as String,
-      total_operations: map['total_operations'] as int,
-      finished_operations: map['finished_operations'] as int,
-      errored_operations: map['errored_operations'] as int,
-      submitted_at: map['submitted_at'] as String,
-      completed_at: map['completed_at'] as String,
-      response_body_url: map['response_body_url'] as String,
-      links: map['_links'] as List<Map<String, String>>,
+      id: map['id'] as String?,
+      status: map['status'] as String?,
+      total_operations: map['total_operations'] as int?,
+      finished_operations: map['finished_operations'] as int?,
+      errored_operations: map['errored_operations'] as int?,
+      submitted_at: map['submitted_at'] as String?,
+      completed_at: map['completed_at'] as String?,
+      response_body_url: map['response_body_url'] as String?,
+      links: map['_links'] as List<Map<String, String>>?,
     );
   }
 

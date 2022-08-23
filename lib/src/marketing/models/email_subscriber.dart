@@ -1,12 +1,12 @@
 class EmailSubscriber{
-  String id;
-  String workflow_id;
-  String email_id;
-  String list_id;
-  String email_address;
-  String next_send;
-  List<Map<String,String>> _links;
-  bool list_is_active;
+  String? id;
+  String? workflow_id;
+  String? email_id;
+  String? list_id;
+  String? email_address;
+  String? next_send;
+  List<Map<String,String>>? _links;
+  bool? list_is_active;
 
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
 
@@ -18,18 +18,18 @@ class EmailSubscriber{
      this.email_address,
      this.next_send,
      this.list_is_active,
-     List<Map<String, String>> links,
+     List<Map<String, String>>? links,
   }) : _links = links;
 
   EmailSubscriber copyWith({
-    String id,
-    String workflow_id,
-    String email_id,
-    String list_id,
-    String email_address,
-    String next_send,
-    List<Map<String, String>> links,
-    bool list_is_active,
+    String? id,
+    String? workflow_id,
+    String? email_id,
+    String? list_id,
+    String? email_address,
+    String? next_send,
+    List<Map<String, String>>? links,
+    bool? list_is_active,
   }) {
     return new EmailSubscriber(
       id: id ?? this.id,
@@ -75,14 +75,14 @@ class EmailSubscriber{
 
   factory EmailSubscriber.fromMap(Map<String, dynamic> map) {
     return new EmailSubscriber(
-      id: map['id'] as String,
-      workflow_id: map['workflow_id'] as String,
-      email_id: map['email_id'] as String,
-      list_id: map['list_id'] as String,
-      email_address: map['email_address'] as String,
-      next_send: map['next_send'] as String,
-      links: map['_links'] as List<Map<String, String>>,
-      list_is_active: map['list_is_active'] as bool,
+      id: map['id'] as String?,
+      workflow_id: map['workflow_id'] as String?,
+      email_id: map['email_id'] as String?,
+      list_id: map['list_id'] as String?,
+      email_address: map['email_address'] as String?,
+      next_send: map['next_send'] as String?,
+      links: map['_links'] as List<Map<String, String>>?,
+      list_is_active: map['list_is_active'] as bool?,
     );
   }
 

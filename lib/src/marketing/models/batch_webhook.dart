@@ -1,7 +1,7 @@
 class BatchWebhook{
-  String id;
-  String url;
-  List<Map<String,String>> _links;
+  String? id;
+  String? url;
+  List<Map<String,String>>? _links;
 
 
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
@@ -10,14 +10,14 @@ class BatchWebhook{
   BatchWebhook({
      this.id,
      this.url,
-     List<Map<String, String>> links,
+     List<Map<String, String>>? links,
   }) : _links = links;
 
 
   BatchWebhook copyWith({
-    String id,
-    String url,
-    List<Map<String, String>> links,
+    String? id,
+    String? url,
+    List<Map<String, String>>? links,
   }) {
     return new BatchWebhook(
       id: id ?? this.id,
@@ -53,9 +53,9 @@ class BatchWebhook{
 
   factory BatchWebhook.fromMap(Map<String, dynamic> map) {
     return new BatchWebhook(
-      id: map['id'] as String,
-      url: map['url'] as String,
-      links: map['_links'] as List<Map<String, String>>,
+      id: map['id'] as String?,
+      url: map['url'] as String?,
+      links: map['_links'] as List<Map<String, String>>?,
     );
   }
 

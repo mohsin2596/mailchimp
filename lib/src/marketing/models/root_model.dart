@@ -2,26 +2,26 @@
 import 'dart:core';
 
 class Root {
-  String accountId;
-  String loginId;
-  String accountName;
-  String email;
-  String firstName;
-  String lastName;
-  String userName;
-  String avatarUrl;
-  String role;
-  String memberSince;
-  String pricingPlanType;
-  String firstPayment;
-  String accountTimezone;
-  String accountIndustry;
-  Map<String, dynamic> contact;
-  bool proEnabled;
-  String lastLogin;
-  int totalSubscribers;
-  Map<String, int> industryStats;
-  List links;
+  String? accountId;
+  String? loginId;
+  String? accountName;
+  String? email;
+  String? firstName;
+  String? lastName;
+  String? userName;
+  String? avatarUrl;
+  String? role;
+  String? memberSince;
+  String? pricingPlanType;
+  String? firstPayment;
+  String? accountTimezone;
+  String? accountIndustry;
+  Map<String, dynamic>? contact;
+  bool? proEnabled;
+  String? lastLogin;
+  int? totalSubscribers;
+  Map<String, int>? industryStats;
+  List? links;
 
   Root({this.accountId, this.loginId, this.accountName, this.email, this.firstName, this.lastName, this.userName, this.avatarUrl, this.role, this.memberSince, this.pricingPlanType, this.firstPayment, this.accountTimezone, this.accountIndustry, this.contact, this.proEnabled, this.lastLogin, this.totalSubscribers, this.industryStats, this.links});
 

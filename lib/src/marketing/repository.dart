@@ -1,20 +1,18 @@
+import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:mailchimp/src/marketing/constants.dart';
 import 'package:mailchimp/src/marketing/enums/api_request_enum.dart';
 
 import 'constants.dart';
-import 'constants.dart';
-import 'constants.dart';
 
 class MarketingRepositories {
-  String apiKey;
-  String server;
-  String authString;
-  String encoded;
-  Map<String, String> headers;
+  String? apiKey;
+  String? server;
+  String? authString;
+  String? encoded;
+  Map<String, String>? headers;
 
   MarketingRepositories(this.apiKey, this.server) {
     String authString = "apikey:$apiKey";
@@ -53,19 +51,20 @@ class MarketingRepositories {
     return null;
   }
 
-  Future<Map<String, dynamic>> getRoot(
-      List<String> fields, List<String> excludedFields) async {
+  Future<Map<String, dynamic>?> getRoot(
+      List<String>? fields, List<String>? excludedFields) async {
     var queryParameters = {
       'fields': fields,
       'exclude_fields': excludedFields,
     };
 
     return apiRequest(
-        RequestType.GET, '/3.0${Endpoint.get_root}', queryParameters);
+            RequestType.GET, '/3.0${Endpoint.get_root}', queryParameters)
+        as FutureOr<Map<String, dynamic>?>;
   }
 
-  Future<List<Map<String, dynamic>>> getAuthorizedApps(List<String> fields,
-      List<String> excludedFields, int count, int offset) async {
+  Future<List<Map<String, dynamic>>> getAuthorizedApps(List<String>? fields,
+      List<String>? excludedFields, int? count, int? offset) async {
     var queryParameters = {
       'fields': fields,
       'exclude_fields': excludedFields,
@@ -74,29 +73,32 @@ class MarketingRepositories {
     };
 
     return apiRequest(
-        RequestType.GET, '/3.0${Endpoint.authorizedApps}', queryParameters);
+            RequestType.GET, '/3.0${Endpoint.authorizedApps}', queryParameters)
+        as Future<List<Map<String, dynamic>>>;
   }
 
-  Future<Map<String, dynamic>> getAuthorizedAppInfo(
-      List<String> fields, List<String> excludedFields, String appId) async {
+  Future<Map<String, dynamic>?> getAuthorizedAppInfo(
+      List<String>? fields, List<String>? excludedFields, String? appId) async {
     var queryParameters = {
       'fields': fields,
       'exclude_fields': excludedFields,
     };
 
-    return apiRequest(RequestType.GET,
-        '/3.0${Endpoint.getAuthorizedAppInfo(appId)}', queryParameters);
+    return apiRequest(
+        RequestType.GET,
+        '/3.0${Endpoint.getAuthorizedAppInfo(appId)}',
+        queryParameters) as FutureOr<Map<String, dynamic>?>;
   }
 
-  Future<List<Map<String, dynamic>>> getAutomations(
-      int count,
-      int offset,
-      List<String> fields,
-      List<String> excludedFields,
-      String beforeCreateTime,
-      String sinceCreateTime,
-      String beforeStartTime,
-      String sinceStartTime,
+  Future<List<Map<String, dynamic>>?> getAutomations(
+      int? count,
+      int? offset,
+      List<String>? fields,
+      List<String>? excludedFields,
+      String? beforeCreateTime,
+      String? sinceCreateTime,
+      String? beforeStartTime,
+      String? sinceStartTime,
       String status) async {
     var queryParameters = {
       'fields': fields,
@@ -111,10 +113,11 @@ class MarketingRepositories {
     };
 
     return apiRequest(
-        RequestType.GET, '/3.0${Endpoint.automations}', queryParameters);
+            RequestType.GET, '/3.0${Endpoint.automations}', queryParameters)
+        as FutureOr<List<Map<String, dynamic>>?>;
   }
 
-  Future<Map<String, dynamic>> addAutomation(Map<String, String> recipients,
+  Future<Map<String, dynamic>?> addAutomation(Map<String, String> recipients,
       Map<String, String> triggerSettings, Map<String, String> settings) async {
     var queryParameters = {
       'recipients': recipients,
@@ -122,17 +125,18 @@ class MarketingRepositories {
       'settings': settings,
     };
     return apiRequest(
-        RequestType.POST, '/3.0${Endpoint.automations}', queryParameters);
+            RequestType.POST, '/3.0${Endpoint.automations}', queryParameters)
+        as FutureOr<Map<String, dynamic>?>;
   }
 
-  Future<Map<String, dynamic>> getAutomationInfo(
-      String id, List<String> fields, List<String> excludedFields) async {
+  Future<Map<String, dynamic>?> getAutomationInfo(
+      String id, List<String>? fields, List<String>? excludedFields) async {
     var queryParameters = {
       'fields': fields,
       'exclude_fields': excludedFields,
     };
     return apiRequest(RequestType.GET, '/3.0${Endpoint.getAutomationInfo(id)}',
-        queryParameters);
+        queryParameters) as FutureOr<Map<String, dynamic>?>;
   }
 
   Future<void> startAutomationEmails(String id) {
@@ -153,15 +157,17 @@ class MarketingRepositories {
         successCode: 204);
   }
 
-  Future<Map<String, dynamic>> listAutomatedEmails(String id) async {
+  Future<Map<String, dynamic>?> listAutomatedEmails(String id) async {
     return apiRequest(
-        RequestType.GET, '/3.0${Endpoint.listAutomationEmails(id)}', {});
+            RequestType.GET, '/3.0${Endpoint.listAutomationEmails(id)}', {})
+        as FutureOr<Map<String, dynamic>?>;
   }
 
-  Future<Map<String, dynamic>> getWorkflowEmailInfo(
+  Future<Map<String, dynamic>?> getWorkflowEmailInfo(
       String id, String emailId) async {
     return apiRequest(
-        RequestType.GET, '/3.0${Endpoint.workflowEmail(id, emailId)}', {});
+            RequestType.GET, '/3.0${Endpoint.workflowEmail(id, emailId)}', {})
+        as FutureOr<Map<String, dynamic>?>;
   }
 
   Future<void> deleteWorkflowEmail(String id, String emailId) async {
@@ -170,14 +176,16 @@ class MarketingRepositories {
         successCode: 204);
   }
 
-  Future<Map<String, dynamic>> updateWorkflowEmail(String id, String emailId,
+  Future<Map<String, dynamic>?> updateWorkflowEmail(String id, String emailId,
       Map<String, dynamic> delay, Map<String, String> settings) async {
     var queryParameters = {
       'delay': delay,
       'settings': settings,
     };
-    return apiRequest(RequestType.PATCH,
-        '/3.0${Endpoint.workflowEmail(id, emailId)}', queryParameters);
+    return apiRequest(
+        RequestType.PATCH,
+        '/3.0${Endpoint.workflowEmail(id, emailId)}',
+        queryParameters) as FutureOr<Map<String, dynamic>?>;
   }
 
   Future<void> pauseAutomatedEmail(String id, String emailId) async {
@@ -192,51 +200,51 @@ class MarketingRepositories {
         successCode: 204);
   }
 
-  Future<Map<String, dynamic>> getAutomatedEmailSubscribers(
+  Future<Map<String, dynamic>?> getAutomatedEmailSubscribers(
       String id, String emailId) async {
     return apiRequest(
         RequestType.GET, '/3.0${Endpoint.emailSubscribers(id, emailId)}', {},
-        successCode: 200);
+        successCode: 200) as FutureOr<Map<String, dynamic>?>;
   }
 
-  Future<Map<String, dynamic>> addEmailSubscriber(
+  Future<Map<String, dynamic>?> addEmailSubscriber(
       String id, String emailId, String emailAddress) async {
     var queryParameters = {'email_address': emailAddress};
     return apiRequest(RequestType.POST,
         '/3.0${Endpoint.emailSubscribers(id, emailId)}', queryParameters,
-        successCode: 200);
+        successCode: 200) as FutureOr<Map<String, dynamic>?>;
   }
 
-  Future<Map<String, dynamic>> getEmailSubscriber(
+  Future<Map<String, dynamic>?> getEmailSubscriber(
       String id, String emailId, String subscriberHash) async {
     return apiRequest(RequestType.GET,
         '/3.0${Endpoint.getEmailSubscriber(id, emailId, subscriberHash)}', {},
-        successCode: 200);
+        successCode: 200) as FutureOr<Map<String, dynamic>?>;
   }
 
-  Future<Map<String, dynamic>> getRemovedSubscribers(String id) async {
+  Future<Map<String, dynamic>?> getRemovedSubscribers(String id) async {
     return apiRequest(
         RequestType.GET, '/3.0${Endpoint.removedSubscribers(id)}', {},
-        successCode: 200);
+        successCode: 200) as FutureOr<Map<String, dynamic>?>;
   }
 
-  Future<Map<String, dynamic>> removeSubscriber(
+  Future<Map<String, dynamic>?> removeSubscriber(
       String id, String emailAddress) async {
     var queryParameters = {'email_address': emailAddress};
     return apiRequest(RequestType.POST,
         '/3.0${Endpoint.removedSubscribers(id)}', queryParameters,
-        successCode: 200);
+        successCode: 200) as FutureOr<Map<String, dynamic>?>;
   }
 
-  Future<Map<String, dynamic>> getRemovedSubscriber(
+  Future<Map<String, dynamic>?> getRemovedSubscriber(
       String id, String subscriberHash) async {
     return apiRequest(RequestType.GET,
         '/3.0${Endpoint.getRemovedSubscriber(id, subscriberHash)}', {},
-        successCode: 200);
+        successCode: 200) as FutureOr<Map<String, dynamic>?>;
   }
 
-  Future<Map<String, dynamic>> getBatchRequests(List<String> fields,
-      List<String> excludedFields, int count, int offset) async {
+  Future<Map<String, dynamic>?> getBatchRequests(List<String>? fields,
+      List<String>? excludedFields, int? count, int? offset) async {
     var queryParameters = {
       'fields': fields,
       'exclude_fields': excludedFields,
@@ -244,14 +252,15 @@ class MarketingRepositories {
       'offset': offset
     };
     return apiRequest(
-        RequestType.GET, '/3.0${Endpoint.batches}', queryParameters);
+            RequestType.GET, '/3.0${Endpoint.batches}', queryParameters)
+        as FutureOr<Map<String, dynamic>?>;
   }
 
-  Future<Map<String, dynamic>> startBatchOperations(
+  Future<Map<String, dynamic>?> startBatchOperations(
       String requestMethod,
       String path,
-      int count,
-      int offset,
+      int? count,
+      int? offset,
       String jsonBody,
       String operationId) async {
     var queryParameters = {
@@ -266,17 +275,20 @@ class MarketingRepositories {
       ],
     };
     return apiRequest(
-        RequestType.POST, '/3.0${Endpoint.batches}', queryParameters);
+            RequestType.POST, '/3.0${Endpoint.batches}', queryParameters)
+        as FutureOr<Map<String, dynamic>?>;
   }
 
-  Future<Map<String, dynamic>> getBatchOperationStatus(
-      String batchId, List<String> fields, List<String> excludedFields) async {
+  Future<Map<String, dynamic>?> getBatchOperationStatus(String batchId,
+      List<String>? fields, List<String>? excludedFields) async {
     var queryParameters = {
       'fields': fields,
       'exclude_fields': excludedFields,
     };
-    return apiRequest(RequestType.GET,
-        '/3.0${Endpoint.batchOperation(batchId)}', queryParameters);
+    return apiRequest(
+        RequestType.GET,
+        '/3.0${Endpoint.batchOperation(batchId)}',
+        queryParameters) as FutureOr<Map<String, dynamic>?>;
   }
 
   Future<void> deleteBatchRequest(String batchId) async {
@@ -285,8 +297,8 @@ class MarketingRepositories {
         successCode: 204);
   }
 
-  Future<Map<String, dynamic>> getBatchWebhooks(List<String> fields,
-      List<String> excludedFields, int count, int offset) async {
+  Future<Map<String, dynamic>?> getBatchWebhooks(List<String>? fields,
+      List<String>? excludedFields, int? count, int? offset) async {
     var queryParameters = {
       'fields': fields,
       'exclude_fields': excludedFields,
@@ -294,30 +306,36 @@ class MarketingRepositories {
       'offset': offset
     };
     return apiRequest(
-        RequestType.GET, '/3.0${Endpoint.batchWebhooks}', queryParameters);
+            RequestType.GET, '/3.0${Endpoint.batchWebhooks}', queryParameters)
+        as FutureOr<Map<String, dynamic>?>;
   }
 
-  Future<Map<String, dynamic>> addBatchWebhook(String url) async {
+  Future<Map<String, dynamic>?> addBatchWebhook(String url) async {
     var queryParameters = {'url': url};
     return apiRequest(
-        RequestType.POST, '/3.0${Endpoint.batchWebhooks}', queryParameters);
+            RequestType.POST, '/3.0${Endpoint.batchWebhooks}', queryParameters)
+        as FutureOr<Map<String, dynamic>?>;
   }
 
-  Future<Map<String, dynamic>> getBatchWebhookInfo(String batchWebhookId,
-      List<String> fields, List<String> excludedFields) async {
+  Future<Map<String, dynamic>?> getBatchWebhookInfo(String? batchWebhookId,
+      List<String>? fields, List<String>? excludedFields) async {
     var queryParameters = {
       'fields': fields,
       'exclude_fields': excludedFields,
     };
-    return apiRequest(RequestType.GET,
-        '/3.0${Endpoint.batchWebhookInfo(batchWebhookId)}', queryParameters);
+    return apiRequest(
+        RequestType.GET,
+        '/3.0${Endpoint.batchWebhookInfo(batchWebhookId)}',
+        queryParameters) as FutureOr<Map<String, dynamic>?>;
   }
 
-  Future<Map<String, dynamic>> updateBatchWebhook(
-      String batchWebhookId, String url) async {
+  Future<Map<String, dynamic>?> updateBatchWebhook(
+      String? batchWebhookId, String? url) async {
     var queryParameters = {'url': url};
-    return apiRequest(RequestType.PATCH,
-        '/3.0${Endpoint.batchWebhookInfo(batchWebhookId)}', queryParameters);
+    return apiRequest(
+        RequestType.PATCH,
+        '/3.0${Endpoint.batchWebhookInfo(batchWebhookId)}',
+        queryParameters) as FutureOr<Map<String, dynamic>?>;
   }
 
   Future<void> deleteBatchWebhook(String batchWebhookId) async {
@@ -326,8 +344,8 @@ class MarketingRepositories {
         successCode: 204);
   }
 
-  Future<Map<String, dynamic>> getCampaignFolders(List<String> fields,
-      List<String> excludedFields, int count, int offset) async {
+  Future<Map<String, dynamic>?> getCampaignFolders(List<String>? fields,
+      List<String>? excludedFields, int? count, int? offset) async {
     var queryParameters = {
       'fields': fields,
       'exclude_fields': excludedFields,
@@ -335,30 +353,35 @@ class MarketingRepositories {
       'offset': offset
     };
     return apiRequest(
-        RequestType.GET, '/3.0${Endpoint.campaignFolders}', queryParameters);
+            RequestType.GET, '/3.0${Endpoint.campaignFolders}', queryParameters)
+        as FutureOr<Map<String, dynamic>?>;
   }
 
-  Future<Map<String, dynamic>> addCampaignFolder(String name) async {
+  Future<Map<String, dynamic>?> addCampaignFolder(String name) async {
     var queryParameters = {'name': name};
-    return apiRequest(
-        RequestType.POST, '/3.0${Endpoint.campaignFolders}', queryParameters);
+    return apiRequest(RequestType.POST, '/3.0${Endpoint.campaignFolders}',
+        queryParameters) as FutureOr<Map<String, dynamic>?>;
   }
 
-  Future<Map<String, dynamic>> getCampaignFolderInfo(
-      String folderId, List<String> fields, List<String> excludedFields) async {
+  Future<Map<String, dynamic>?> getCampaignFolderInfo(String? folderId,
+      List<String>? fields, List<String>? excludedFields) async {
     var queryParameters = {
       'fields': fields,
       'exclude_fields': excludedFields,
     };
-    return apiRequest(RequestType.GET,
-        '/3.0${Endpoint.campaignFolderInfo(folderId)}', queryParameters);
+    return apiRequest(
+        RequestType.GET,
+        '/3.0${Endpoint.campaignFolderInfo(folderId)}',
+        queryParameters) as FutureOr<Map<String, dynamic>?>;
   }
 
-  Future<Map<String, dynamic>> updateCampaignFolder(
-      String folderId, String name) async {
+  Future<Map<String, dynamic>?> updateCampaignFolder(
+      String? folderId, String? name) async {
     var queryParameters = {'name': name};
-    return apiRequest(RequestType.PATCH,
-        '/3.0${Endpoint.campaignFolderInfo(folderId)}', queryParameters);
+    return apiRequest(
+        RequestType.PATCH,
+        '/3.0${Endpoint.campaignFolderInfo(folderId)}',
+        queryParameters) as FutureOr<Map<String, dynamic>?>;
   }
 
   Future<void> deleteCampaignFolder(String folderId) async {
@@ -367,20 +390,20 @@ class MarketingRepositories {
         successCode: 204);
   }
 
-  Future<Map<String, dynamic>> getCampaigns(
-      List<String> fields,
-      List<String> excludedFields,
-      int count,
-      int offset,
+  Future<Map<String, dynamic>?> getCampaigns(
+      List<String>? fields,
+      List<String>? excludedFields,
+      int? count,
+      int? offset,
       String type,
       String status,
-      String beforeSendTime,
-      String sinceSendTime,
-      String beforeCreateTime,
-      String sinceCreateTime,
-      String listId,
-      String folderId,
-      String memberId,
+      String? beforeSendTime,
+      String? sinceSendTime,
+      String? beforeCreateTime,
+      String? sinceCreateTime,
+      String? listId,
+      String? folderId,
+      String? memberId,
       String sortField,
       String sortDir) async {
     var queryParameters = {
@@ -401,10 +424,11 @@ class MarketingRepositories {
       'sort_dir': sortDir
     };
     return apiRequest(
-        RequestType.GET, '/3.0${Endpoint.campaigns}', queryParameters);
+            RequestType.GET, '/3.0${Endpoint.campaigns}', queryParameters)
+        as FutureOr<Map<String, dynamic>?>;
   }
 
-  Future<Map<String, dynamic>> addCampaign(
+  Future<Map<String, dynamic>?> addCampaign(
       String type,
       Map<String, dynamic> rssOpts,
       Map<String, dynamic> recipients,
@@ -424,20 +448,23 @@ class MarketingRepositories {
       "content_type": contentType
     };
     return apiRequest(
-        RequestType.POST, '/3.0${Endpoint.campaigns}', queryParameters);
+            RequestType.POST, '/3.0${Endpoint.campaigns}', queryParameters)
+        as FutureOr<Map<String, dynamic>?>;
   }
 
-  Future<Map<String, dynamic>> getCampaignInfo(String campaignId,
-      List<String> fields, List<String> excludedFields) async {
+  Future<Map<String, dynamic>?> getCampaignInfo(String campaignId,
+      List<String>? fields, List<String>? excludedFields) async {
     var queryParameters = {
       'fields': fields,
       'exclude_fields': excludedFields,
     };
-    return apiRequest(RequestType.GET,
-        '/3.0${Endpoint.campaignInfo(campaignId)}', queryParameters);
+    return apiRequest(
+        RequestType.GET,
+        '/3.0${Endpoint.campaignInfo(campaignId)}',
+        queryParameters) as FutureOr<Map<String, dynamic>?>;
   }
 
-  Future<Map<String, dynamic>> updateCampaign(
+  Future<Map<String, dynamic>?> updateCampaign(
     String campaignId,
     Map<String, dynamic> rssOpts,
     Map<String, dynamic> recipients,
@@ -454,8 +481,10 @@ class MarketingRepositories {
       "rss_opts": rssOpts,
       "social_card": socialCard,
     };
-    return apiRequest(RequestType.PATCH,
-        '/3.0${Endpoint.campaignInfo(campaignId)}', queryParameters);
+    return apiRequest(
+        RequestType.PATCH,
+        '/3.0${Endpoint.campaignInfo(campaignId)}',
+        queryParameters) as FutureOr<Map<String, dynamic>?>;
   }
 
   Future<void> deleteCampaign(String campaignId) async {
@@ -476,8 +505,8 @@ class MarketingRepositories {
         successCode: 204);
   }
 
-  Future<void> scheduleCampaign(String campaignId, String scheduleTime,
-      Map<String, dynamic> batchDelivery, bool timewarp) async {
+  Future<void> scheduleCampaign(String campaignId, String? scheduleTime,
+      Map<String, dynamic> batchDelivery, bool? timewarp) async {
     var queryParamters = {
       "schedule_time": scheduleTime,
       "timewarp": timewarp,
@@ -506,32 +535,32 @@ class MarketingRepositories {
         successCode: 204);
   }
 
-  Future<Map<String, dynamic>> replicateCampaign(String campaignId) async {
+  Future<Map<String, dynamic>?> replicateCampaign(String campaignId) async {
     return apiRequest(
       RequestType.POST,
       '/3.0${Endpoint.replicateCampaign(campaignId)}',
       {},
-    );
+    ) as FutureOr<Map<String, dynamic>?>;
   }
 
   Future<void> sendTestEmail(
-      String campaignId, List<String> testEmails, String sendType) async {
+      String campaignId, List<String>? testEmails, String sendType) async {
     var queryParameters = {"test_emails": testEmails, "send_type": sendType};
     return apiRequest(RequestType.POST,
         '/3.0${Endpoint.replicateCampaign(campaignId)}', queryParameters,
         successCode: 204);
   }
 
-  Future<Map<String, dynamic>> resendCampaign(String campaignId) async {
+  Future<Map<String, dynamic>?> resendCampaign(String campaignId) async {
     return apiRequest(
       RequestType.POST,
       '/3.0${Endpoint.resendCampaign(campaignId)}',
       {},
-    );
+    ) as FutureOr<Map<String, dynamic>?>;
   }
 
-  Future<Map<String, dynamic>> getCampaignContent(
-      String campaignId, List<String> fields, List<String> excludeFields) {
+  Future<Map<String, dynamic>?> getCampaignContent(
+      String campaignId, List<String>? fields, List<String>? excludeFields) {
     var queryParameters = {
       'fields': fields,
       'exclude_fields': excludeFields,
@@ -540,17 +569,17 @@ class MarketingRepositories {
       RequestType.GET,
       '/3.0${Endpoint.campaignContent(campaignId)}',
       queryParameters,
-    );
+    ).then((value) => value as Map<String, dynamic>?);
   }
 
-  Future<Map<String, dynamic>> setCampaignContent(
-      String campaignId,
+  Future<Map<String, dynamic>?> setCampaignContent(
+      String? campaignId,
       Map<String, String> archive,
       Map<String, dynamic> template,
-      String plainText,
-      String html,
-      String url,
-      List<Map<String, dynamic>> variateContents) {
+      String? plainText,
+      String? html,
+      String? url,
+      List<Map<String, dynamic>?> variateContents) {
     var queryParameters = {
       "plain_text": plainText,
       "html": html,
@@ -563,11 +592,11 @@ class MarketingRepositories {
       RequestType.PUT,
       '/3.0${Endpoint.campaignContent(campaignId)}',
       queryParameters,
-    );
+    ).then((value) => value as Map<String, dynamic>?);
   }
 
-  Future<Map<String, dynamic>> getCampaignFeedback(
-      String campaignId, List<String> fields, List<String> excludeFields) {
+  Future<Map<String, dynamic>?> getCampaignFeedback(
+      String campaignId, List<String>? fields, List<String>? excludeFields) {
     var queryParameters = {
       'fields': fields,
       'exclude_fields': excludeFields,
@@ -576,11 +605,11 @@ class MarketingRepositories {
       RequestType.GET,
       '/3.0${Endpoint.campaignFeedback(campaignId)}',
       queryParameters,
-    );
+    ).then((value) => value as Map<String, dynamic>?);
   }
 
-  Future<Map<String, dynamic>> addCampaignFeedback(
-      String campaignId, String message, int blockId, bool isComplete) {
+  Future<Map<String, dynamic>?> addCampaignFeedback(
+      String campaignId, String message, int? blockId, bool? isComplete) {
     var queryParameters = {
       "block_id": blockId,
       "message": message,
@@ -590,11 +619,11 @@ class MarketingRepositories {
       RequestType.POST,
       '/3.0${Endpoint.campaignFeedback(campaignId)}',
       queryParameters,
-    );
+    ).then((value) => value as Map<String, dynamic>?);
   }
 
-  Future<Map<String, dynamic>> getCampaignFeedbackMessage(String campaignId,
-      String feedbackId, List<String> fields, List<String> excludeFields) {
+  Future<Map<String, dynamic>?> getCampaignFeedbackMessage(String campaignId,
+      String feedbackId, List<String>? fields, List<String>? excludeFields) {
     var queryParameters = {
       'fields': fields,
       'exclude_fields': excludeFields,
@@ -603,11 +632,11 @@ class MarketingRepositories {
       RequestType.GET,
       '/3.0${Endpoint.campaignFeedbackInfo(campaignId, feedbackId)}',
       queryParameters,
-    );
+    ).then((value) => value as Map<String, dynamic>?);
   }
 
-  Future<Map<String, dynamic>> updateCampaignFeedback(String campaignId,
-      String feedbackId, String message, int blockId, bool isComplete) {
+  Future<Map<String, dynamic>?> updateCampaignFeedback(String campaignId,
+      String feedbackId, String? message, int? blockId, bool? isComplete) {
     var queryParameters = {
       "block_id": blockId,
       "message": message,
@@ -617,7 +646,7 @@ class MarketingRepositories {
       RequestType.PATCH,
       '/3.0${Endpoint.campaignFeedbackInfo(campaignId, feedbackId)}',
       queryParameters,
-    );
+    ).then((value) => value as Map<String, dynamic>?);
   }
 
   Future<void> deleteCampaignFeedback(

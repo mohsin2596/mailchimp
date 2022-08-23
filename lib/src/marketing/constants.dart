@@ -5,7 +5,7 @@ class Endpoint {
 
   static const String authorizedApps = "/authorized-apps";
 
-  static String getAuthorizedAppInfo(String app_id) =>
+  static String getAuthorizedAppInfo(String? app_id) =>
       "/authorized-apps/$app_id";
 
   static const String automations = "/automations";
@@ -59,12 +59,12 @@ class Endpoint {
 
   static const String batchWebhooks = '/batch-webhooks';
 
-  static String batchWebhookInfo(String batchWebhookId) =>
+  static String batchWebhookInfo(String? batchWebhookId) =>
       '/batch-webhooks/$batchWebhookId';
 
   static const String campaignFolders = '/campaign-folders';
 
-  static String campaignFolderInfo(String folderId) =>
+  static String campaignFolderInfo(String? folderId) =>
       '/campaign-folders/$folderId';
 
   static const String campaigns = '/campaigns';
@@ -98,7 +98,7 @@ class Endpoint {
   static String resendCampaign(String campaignId) =>
       '/campaigns/$campaignId/actions/create-resend';
 
-  static String campaignContent(String campaignId) => '/campaigns/$campaignId/content';
+  static String campaignContent(String? campaignId) => '/campaigns/$campaignId/content';
 
   static String campaignFeedback(String campaignId) => '/campaigns/$campaignId/feedback';
   static String campaignFeedbackInfo(String campaignId,String feedbackId) => '/campaigns/$campaignId/feedback/$feedbackId';

@@ -1,27 +1,27 @@
 class Campaign{
-  String id;
-  int web_id;
-  String parent_campaign_id;
-  String type;
-  String create_time;
-  String archive_url;
-  String long_archive_url;
-  String status;
-  int emails_sent;
-  String send_time;
-  String content_type;
-  String needs_block_refresh;
-  String resendable;
-  Map<String,dynamic> recipients;
-  Map<String,dynamic> settings;
-  Map<String,dynamic> variate_settings;
-  Map<String,dynamic> tracking;
-  Map<String,dynamic> rss_opts;
-  Map<String,dynamic> ab_split_opts;
-  Map<String,String> social_card;
-  Map<String,dynamic> report_summary;
-  Map<String,dynamic> delivery_status;
-  List<Map<String,dynamic>> _links;
+  String? id;
+  int? web_id;
+  String? parent_campaign_id;
+  String? type;
+  String? create_time;
+  String? archive_url;
+  String? long_archive_url;
+  String? status;
+  int? emails_sent;
+  String? send_time;
+  String? content_type;
+  String? needs_block_refresh;
+  String? resendable;
+  Map<String,dynamic>? recipients;
+  Map<String,dynamic>? settings;
+  Map<String,dynamic>? variate_settings;
+  Map<String,dynamic>? tracking;
+  Map<String,dynamic>? rss_opts;
+  Map<String,dynamic>? ab_split_opts;
+  Map<String,String>? social_card;
+  Map<String,dynamic>? report_summary;
+  Map<String,dynamic>? delivery_status;
+  List<Map<String,dynamic>>? _links;
 
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
 
@@ -48,33 +48,33 @@ class Campaign{
      this.social_card,
      this.report_summary,
      this.delivery_status,
-     List<Map<String, dynamic>> links,
+     List<Map<String, dynamic>>? links,
   }) : _links = links;
 
   Campaign copyWith({
-    String id,
-    int web_id,
-    String parent_campaign_id,
-    String type,
-    String create_time,
-    String archive_url,
-    String long_archive_url,
-    String status,
-    int emails_sent,
-    String send_time,
-    String content_type,
-    String needs_block_refresh,
-    String resendable,
-    Map<String, dynamic> recipients,
-    Map<String, dynamic> settings,
-    Map<String, dynamic> variate_settings,
-    Map<String, dynamic> tracking,
-    Map<String, dynamic> rss_opts,
-    Map<String, dynamic> ab_split_opts,
-    Map<String, String> social_card,
-    Map<String, dynamic> report_summary,
-    Map<String, dynamic> delivery_status,
-    List<Map<String, dynamic>> links,
+    String? id,
+    int? web_id,
+    String? parent_campaign_id,
+    String? type,
+    String? create_time,
+    String? archive_url,
+    String? long_archive_url,
+    String? status,
+    int? emails_sent,
+    String? send_time,
+    String? content_type,
+    String? needs_block_refresh,
+    String? resendable,
+    Map<String, dynamic>? recipients,
+    Map<String, dynamic>? settings,
+    Map<String, dynamic>? variate_settings,
+    Map<String, dynamic>? tracking,
+    Map<String, dynamic>? rss_opts,
+    Map<String, dynamic>? ab_split_opts,
+    Map<String, String>? social_card,
+    Map<String, dynamic>? report_summary,
+    Map<String, dynamic>? delivery_status,
+    List<Map<String, dynamic>>? links,
   }) {
     return new Campaign(
       id: id ?? this.id,
@@ -165,29 +165,29 @@ class Campaign{
 
   factory Campaign.fromMap(Map<String, dynamic> map) {
     return new Campaign(
-      id: map['id'] as String,
-      web_id: map['web_id'] as int,
-      parent_campaign_id: map['parent_campaign_id'] as String,
-      type: map['type'] as String,
-      create_time: map['create_time'] as String,
-      archive_url: map['archive_url'] as String,
-      long_archive_url: map['long_archive_url'] as String,
-      status: map['status'] as String,
-      emails_sent: map['emails_sent'] as int,
-      send_time: map['send_time'] as String,
-      content_type: map['content_type'] as String,
-      needs_block_refresh: map['needs_block_refresh'] as String,
-      resendable: map['resendable'] as String,
-      recipients: map['recipients'] as Map<String, dynamic>,
-      settings: map['settings'] as Map<String, dynamic>,
-      variate_settings: map['variate_settings'] as Map<String, dynamic>,
-      tracking: map['tracking'] as Map<String, dynamic>,
-      rss_opts: map['rss_opts'] as Map<String, dynamic>,
-      ab_split_opts: map['ab_split_opts'] as Map<String, dynamic>,
-      social_card: map['social_card'] as Map<String, String>,
-      report_summary: map['report_summary'] as Map<String, dynamic>,
-      delivery_status: map['delivery_status'] as Map<String, dynamic>,
-      links: map['_links'] as List<Map<String, dynamic>>,
+      id: map['id'] as String?,
+      web_id: map['web_id'] as int?,
+      parent_campaign_id: map['parent_campaign_id'] as String?,
+      type: map['type'] as String?,
+      create_time: map['create_time'] as String?,
+      archive_url: map['archive_url'] as String?,
+      long_archive_url: map['long_archive_url'] as String?,
+      status: map['status'] as String?,
+      emails_sent: map['emails_sent'] as int?,
+      send_time: map['send_time'] as String?,
+      content_type: map['content_type'] as String?,
+      needs_block_refresh: map['needs_block_refresh'] as String?,
+      resendable: map['resendable'] as String?,
+      recipients: map['recipients'] as Map<String, dynamic>?,
+      settings: map['settings'] as Map<String, dynamic>?,
+      variate_settings: map['variate_settings'] as Map<String, dynamic>?,
+      tracking: map['tracking'] as Map<String, dynamic>?,
+      rss_opts: map['rss_opts'] as Map<String, dynamic>?,
+      ab_split_opts: map['ab_split_opts'] as Map<String, dynamic>?,
+      social_card: map['social_card'] as Map<String, String>?,
+      report_summary: map['report_summary'] as Map<String, dynamic>?,
+      delivery_status: map['delivery_status'] as Map<String, dynamic>?,
+      links: map['_links'] as List<Map<String, dynamic>>?,
     );
   }
 

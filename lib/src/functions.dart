@@ -3,7 +3,7 @@ import 'package:mailchimp/src/marketing/enums/api_request_enum.dart';
 import 'package:mailchimp/src/marketing/enums/automation_status_enum.dart';
 import 'package:mailchimp/src/marketing/enums/delay.dart';
 
-String convertListToString(List data, {String separator = ","}) {
+String? convertListToString(List? data, {String separator = ","}) {
   return data?.join(separator);
 }
 

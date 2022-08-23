@@ -1,25 +1,25 @@
 class AutomatedEmail{
-  String id;
-  int web_id;
-  String workflow_id;
-  int position;
-  Map<String,String> delay;
-  String create_time;
-  String start_time;
-  String archive_url;
-  String status;
-  int emails_sent;
-  String send_time;
-  String content_type;
-  bool needs_block_refresh;
-  bool has_logo_merge_tag;
-  Map<String,dynamic> recipients;
-  Map<String,dynamic> settings;
-  Map<String,dynamic> tracking;
-  Map<String,String> social_card;
-  Map<String,dynamic> trigger_settings;
-  Map<String,dynamic> report_summary;
-  List<Map<String,dynamic>> _links;
+  String? id;
+  int? web_id;
+  String? workflow_id;
+  int? position;
+  Map<String,String>? delay;
+  String? create_time;
+  String? start_time;
+  String? archive_url;
+  String? status;
+  int? emails_sent;
+  String? send_time;
+  String? content_type;
+  bool? needs_block_refresh;
+  bool? has_logo_merge_tag;
+  Map<String,dynamic>? recipients;
+  Map<String,dynamic>? settings;
+  Map<String,dynamic>? tracking;
+  Map<String,String>? social_card;
+  Map<String,dynamic>? trigger_settings;
+  Map<String,dynamic>? report_summary;
+  List<Map<String,dynamic>>? _links;
 
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
 
@@ -44,31 +44,31 @@ class AutomatedEmail{
     this.social_card,
     this.trigger_settings,
     this.report_summary,
-    List<Map<String, dynamic>> links,
+    List<Map<String, dynamic>>? links,
   }) : _links = links;
 
   AutomatedEmail copyWith({
-    String id,
-    int web_id,
-    String workflow_id,
-    int position,
-    Map<String, String> delay,
-    String create_time,
-    String start_time,
-    String archive_url,
-    String status,
-    int emails_sent,
-    String send_time,
-    String content_type,
-    bool needs_block_refresh,
-    bool has_logo_merge_tag,
-    Map<String, dynamic> recipients,
-    Map<String, dynamic> settings,
-    Map<String, dynamic> tracking,
-    Map<String, String> social_card,
-    Map<String, dynamic> trigger_settings,
-    Map<String, dynamic> report_summary,
-    List<Map<String, dynamic>> links,
+    String? id,
+    int? web_id,
+    String? workflow_id,
+    int? position,
+    Map<String, String>? delay,
+    String? create_time,
+    String? start_time,
+    String? archive_url,
+    String? status,
+    int? emails_sent,
+    String? send_time,
+    String? content_type,
+    bool? needs_block_refresh,
+    bool? has_logo_merge_tag,
+    Map<String, dynamic>? recipients,
+    Map<String, dynamic>? settings,
+    Map<String, dynamic>? tracking,
+    Map<String, String>? social_card,
+    Map<String, dynamic>? trigger_settings,
+    Map<String, dynamic>? report_summary,
+    List<Map<String, dynamic>>? links,
   }) {
     return new AutomatedEmail(
       id: id ?? this.id,
@@ -153,27 +153,27 @@ class AutomatedEmail{
 
   factory AutomatedEmail.fromMap(Map<String, dynamic> map) {
     return new AutomatedEmail(
-      id: map['id'] as String,
-      web_id: map['web_id'] as int,
-      workflow_id: map['workflow_id'] as String,
-      position: map['position'] as int,
-      delay: map['delay'] as Map<String, String>,
-      create_time: map['create_time'] as String,
-      start_time: map['start_time'] as String,
-      archive_url: map['archive_url'] as String,
-      status: map['status'] as String,
-      emails_sent: map['emails_sent'] as int,
-      send_time: map['send_time'] as String,
-      content_type: map['content_type'] as String,
-      needs_block_refresh: map['needs_block_refresh'] as bool,
-      has_logo_merge_tag: map['has_logo_merge_tag'] as bool,
-      recipients: map['recipients'] as Map<String, dynamic>,
-      settings: map['settings'] as Map<String, dynamic>,
-      tracking: map['tracking'] as Map<String, dynamic>,
-      social_card: map['social_card'] as Map<String, String>,
-      trigger_settings: map['trigger_settings'] as Map<String, dynamic>,
-      report_summary: map['report_summary'] as Map<String, dynamic>,
-      links: map['_links'] as List<Map<String, dynamic>>,
+      id: map['id'] as String?,
+      web_id: map['web_id'] as int?,
+      workflow_id: map['workflow_id'] as String?,
+      position: map['position'] as int?,
+      delay: map['delay'] as Map<String, String>?,
+      create_time: map['create_time'] as String?,
+      start_time: map['start_time'] as String?,
+      archive_url: map['archive_url'] as String?,
+      status: map['status'] as String?,
+      emails_sent: map['emails_sent'] as int?,
+      send_time: map['send_time'] as String?,
+      content_type: map['content_type'] as String?,
+      needs_block_refresh: map['needs_block_refresh'] as bool?,
+      has_logo_merge_tag: map['has_logo_merge_tag'] as bool?,
+      recipients: map['recipients'] as Map<String, dynamic>?,
+      settings: map['settings'] as Map<String, dynamic>?,
+      tracking: map['tracking'] as Map<String, dynamic>?,
+      social_card: map['social_card'] as Map<String, String>?,
+      trigger_settings: map['trigger_settings'] as Map<String, dynamic>?,
+      report_summary: map['report_summary'] as Map<String, dynamic>?,
+      links: map['_links'] as List<Map<String, dynamic>>?,
     );
   }
 

@@ -1,8 +1,8 @@
 class CampaignFolder{
-  String name;
-  String id;
-  int count;
-  List<Map<String,String>> _links;
+  String? name;
+  String? id;
+  int? count;
+  List<Map<String,String>>? _links;
 
 
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
@@ -12,15 +12,15 @@ class CampaignFolder{
      this.name,
      this.id,
      this.count,
-     List<Map<String, String>> links,
+     List<Map<String, String>>? links,
   }) : _links = links;
 
 
   CampaignFolder copyWith({
-    String name,
-    String id,
-    int count,
-    List<Map<String, String>> links,
+    String? name,
+    String? id,
+    int? count,
+    List<Map<String, String>>? links,
   }) {
     return new CampaignFolder(
       name: name ?? this.name,
@@ -59,10 +59,10 @@ class CampaignFolder{
 
   factory CampaignFolder.fromMap(Map<String, dynamic> map) {
     return new CampaignFolder(
-      name: map['name'] as String,
-      id: map['id'] as String,
-      count: map['count'] as int,
-      links: map['_links'] as List<Map<String, String>>,
+      name: map['name'] as String?,
+      id: map['id'] as String?,
+      count: map['count'] as int?,
+      links: map['_links'] as List<Map<String, String>>?,
     );
   }
 

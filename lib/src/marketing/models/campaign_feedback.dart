@@ -1,15 +1,15 @@
 class CampaignFeedback{
-  int feedback_id;
-  int parent_id;
-  int block_id;
-  String message;
-  bool is_complete;
-  String created_at;
-  String created_by;
-  String updated_at;
-  String source;
-  String campaign_id;
-  List<Map<String,dynamic>> _links;
+  int? feedback_id;
+  int? parent_id;
+  int? block_id;
+  String? message;
+  bool? is_complete;
+  String? created_at;
+  String? created_by;
+  String? updated_at;
+  String? source;
+  String? campaign_id;
+  List<Map<String,dynamic>>? _links;
 
 
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
@@ -26,22 +26,22 @@ class CampaignFeedback{
      this.updated_at,
      this.source,
      this.campaign_id,
-     List<Map<String, dynamic>> links,
+     List<Map<String, dynamic>>? links,
   }) : _links = links;
 
 
   CampaignFeedback copyWith({
-    int feedback_id,
-    int parent_id,
-    int block_id,
-    String message,
-    bool is_complete,
-    String created_at,
-    String created_by,
-    String updated_at,
-    String source,
-    String campaign_id,
-    List<Map<String, dynamic>> links,
+    int? feedback_id,
+    int? parent_id,
+    int? block_id,
+    String? message,
+    bool? is_complete,
+    String? created_at,
+    String? created_by,
+    String? updated_at,
+    String? source,
+    String? campaign_id,
+    List<Map<String, dynamic>>? links,
   }) {
     return new CampaignFeedback(
       feedback_id: feedback_id ?? this.feedback_id,
@@ -101,17 +101,17 @@ class CampaignFeedback{
 
   factory CampaignFeedback.fromMap(Map<String, dynamic> map) {
     return new CampaignFeedback(
-      feedback_id: map['feedback_id'] as int,
-      parent_id: map['parent_id'] as int,
-      block_id: map['block_id'] as int,
-      message: map['message'] as String,
-      is_complete: map['is_complete'] as bool,
-      created_at: map['created_at'] as String,
-      created_by: map['created_by'] as String,
-      updated_at: map['updated_at'] as String,
-      source: map['source'] as String,
-      campaign_id: map['campaign_id'] as String,
-      links: map['_links'] as List<Map<String, dynamic>>,
+      feedback_id: map['feedback_id'] as int?,
+      parent_id: map['parent_id'] as int?,
+      block_id: map['block_id'] as int?,
+      message: map['message'] as String?,
+      is_complete: map['is_complete'] as bool?,
+      created_at: map['created_at'] as String?,
+      created_by: map['created_by'] as String?,
+      updated_at: map['updated_at'] as String?,
+      source: map['source'] as String?,
+      campaign_id: map['campaign_id'] as String?,
+      links: map['_links'] as List<Map<String, dynamic>>?,
     );
   }
 

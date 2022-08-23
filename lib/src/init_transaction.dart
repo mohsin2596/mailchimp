@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:mailchimp/src/transaction/core.dart';
 
 class MailChimpTransaction {
-  String _apiKey;
-  String _server;
-  MailChimpTransactionCore _mailChimpTransactionCore;
+  String? _apiKey;
+  String? _server;
+  MailChimpTransactionCore? _mailChimpTransactionCore;
 
-  MailChimpTransaction({@required apiKey, @required server}) {
+  MailChimpTransaction({required apiKey, required server}) {
     _apiKey = apiKey;
     _server = server;
     _mailChimpTransactionCore =

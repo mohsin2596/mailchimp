@@ -1,8 +1,8 @@
 
 class TransactionsRepository {
 
-  String apiKey;
-  String server;
+  String? apiKey;
+  String? server;
   TransactionsRepository(this.apiKey, this.server);
 
 }

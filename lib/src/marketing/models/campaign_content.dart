@@ -1,9 +1,9 @@
 class CampaignContent{
-  List<Map<String,dynamic>> variate_contents;
-  String plain_text;
-  String html;
-  String archive_html;
-  List<Map<String,dynamic>> _links;
+  List<Map<String,dynamic>>? variate_contents;
+  String? plain_text;
+  String? html;
+  String? archive_html;
+  List<Map<String,dynamic>>? _links;
 
 
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
@@ -14,16 +14,16 @@ class CampaignContent{
      this.plain_text,
      this.html,
      this.archive_html,
-     List<Map<String, dynamic>> links,
+     List<Map<String, dynamic>>? links,
   }) : _links = links;
 
 
   CampaignContent copyWith({
-    List<Map<String, dynamic>> variate_contents,
-    String plain_text,
-    String html,
-    String archive_html,
-    List<Map<String, dynamic>> links,
+    List<Map<String, dynamic>>? variate_contents,
+    String? plain_text,
+    String? html,
+    String? archive_html,
+    List<Map<String, dynamic>>? links,
   }) {
     return new CampaignContent(
       variate_contents: variate_contents ?? this.variate_contents,
@@ -65,11 +65,11 @@ class CampaignContent{
 
   factory CampaignContent.fromMap(Map<String, dynamic> map) {
     return new CampaignContent(
-      variate_contents: map['variate_contents'] as List<Map<String, dynamic>>,
-      plain_text: map['plain_text'] as String,
-      html: map['html'] as String,
-      archive_html: map['archive_html'] as String,
-      links: map['_links'] as List<Map<String, dynamic>>,
+      variate_contents: map['variate_contents'] as List<Map<String, dynamic>>?,
+      plain_text: map['plain_text'] as String?,
+      html: map['html'] as String?,
+      archive_html: map['archive_html'] as String?,
+      links: map['_links'] as List<Map<String, dynamic>>?,
     );
   }
 

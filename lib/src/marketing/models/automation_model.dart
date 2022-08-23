@@ -1,15 +1,15 @@
 class Automation {
-  String id;
-  String createTime;
-  String startTime;
-  String status;
-  int emailSent;
-  Map<String, dynamic> recipients;
-  Map<String, dynamic> settings;
-  Map<String, dynamic> tracking;
-  Map<String, dynamic> triggerSettings;
-  Map<String, dynamic> reportSummary;
-  List<Map<String, dynamic>> links;
+  String? id;
+  String? createTime;
+  String? startTime;
+  String? status;
+  int? emailSent;
+  Map<String, dynamic>? recipients;
+  Map<String, dynamic>? settings;
+  Map<String, dynamic>? tracking;
+  Map<String, dynamic>? triggerSettings;
+  Map<String, dynamic>? reportSummary;
+  List<Map<String, dynamic>>? links;
 
   Automation(
       {this.id,

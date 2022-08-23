@@ -1,9 +1,9 @@
 class AuthorizedApp {
-  int id;
-  String name;
-  String description;
-  List<String> users;
-  List links;
+  int? id;
+  String? name;
+  String? description;
+  List<String>? users;
+  List? links;
 
   AuthorizedApp({this.id, this.name, this.description, this.users, this.links});
 

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:mailchimp/src/marketing/enums/api_request_enum.dart';
 import 'package:mailchimp/src/marketing/enums/campaign_enum.dart';
 import 'package:mailchimp/src/marketing/enums/delay.dart';
@@ -21,56 +20,58 @@ import 'models/automation_model.dart';
 import 'models/root_model.dart';
 
 class MailChimpMarketingCore {
-  MarketingRepositories repositories;
+  late MarketingRepositories repositories;
 
   MailChimpMarketingCore.setConfigs({apiKey, server}) {
     repositories = MarketingRepositories(apiKey, server);
   }
 
   Future<Root> getRoot(
-      {List<String> fields, List<String> excludeFields}) async {
-    String getFields = convertListToString(fields);
-    String getExcludedFields = convertListToString(excludeFields);
-    Map<String, dynamic> data =
-        await repositories.getRoot(fields, excludeFields);
+      {List<String>? fields, List<String>? excludeFields}) async {
+    String? getFields = convertListToString(fields);
+    String? getExcludedFields = convertListToString(excludeFields);
+    Map<String, dynamic> data = await (repositories.getRoot(
+        fields, excludeFields) as Future<Map<String, dynamic>>);
     return Root.fromJson(data);
   }
 
   Future<List<AuthorizedApp>> getAuthorizedApps(
-      {List<String> fields,
-      List<String> excludeFields,
-      int count,
-      int offset}) async {
-    String getFields = convertListToString(fields);
-    String getExcludedFields = convertListToString(excludeFields);
+      {List<String>? fields,
+      List<String>? excludeFields,
+      int? count,
+      int? offset}) async {
+    String? getFields = convertListToString(fields);
+    String? getExcludedFields = convertListToString(excludeFields);
     List<Map<String, dynamic>> data = await repositories.getAuthorizedApps(
         fields, excludeFields, count, offset);
     return data.map((value) => AuthorizedApp.fromJson(value)).toList();
   }
 
   Future<AuthorizedApp> getAuthorizedApp(
-      {List<String> fields, List<String> excludeFields, String appId}) async {
-    String getFields = convertListToString(fields);
-    String getExcludedFields = convertListToString(excludeFields);
-    Map<String, dynamic> data =
-        await repositories.getAuthorizedAppInfo(fields, excludeFields, appId);
+      {List<String>? fields,
+      List<String>? excludeFields,
+      String? appId}) async {
+    String? getFields = convertListToString(fields);
+    String? getExcludedFields = convertListToString(excludeFields);
+    Map<String, dynamic> data = await (repositories.getAuthorizedAppInfo(
+        fields, excludeFields, appId) as Future<Map<String, dynamic>>);
     return AuthorizedApp.fromJson(data);
   }
 
   Future<List<Automation>> getAutomations(
-      {int count,
-      int offset,
-      List<String> fields,
-      List<String> excludeFields,
-      String beforeCreateTime,
-      String sinceCreateTime,
-      String beforeStartTime,
-      String sinceStartTime,
-      AutomationStatus status}) async {
-    String getFields = convertListToString(fields);
-    String getExcludedFields = convertListToString(excludeFields);
+      {int? count,
+      int? offset,
+      List<String>? fields,
+      List<String>? excludeFields,
+      String? beforeCreateTime,
+      String? sinceCreateTime,
+      String? beforeStartTime,
+      String? sinceStartTime,
+      AutomationStatus? status}) async {
+    String? getFields = convertListToString(fields);
+    String? getExcludedFields = convertListToString(excludeFields);
     String automationStatus = fetchStringOfEnum(status);
-    List<Map<String, dynamic>> data = await repositories.getAutomations(
+    List<Map<String, dynamic>> data = await (repositories.getAutomations(
         count,
         offset,
         fields,
@@ -79,79 +80,80 @@ class MailChimpMarketingCore {
         sinceCreateTime,
         beforeStartTime,
         sinceStartTime,
-        automationStatus);
+        automationStatus) as Future<List<Map<String, dynamic>>>);
     return data.map((value) => Automation.fromJson(value)).toList();
   }
 
   Future<Automation> addAutomation(
-      {@required String listId,
-      @required String storeId,
-      String fromName,
-      String replyTo}) async {
+      {required String listId,
+      required String storeId,
+      String? fromName,
+      String? replyTo}) async {
     Map<String, String> recipients = {"list_id": listId, "store_id": storeId};
     Map<String, String> triggerSettings = {"workflow_type": "abandonedCart"};
     Map<String, String> settings = {
       "from_name": fromName ?? '',
       "reply_to": replyTo ?? ''
     };
-    return Automation.fromJson(await repositories.addAutomation(
-        recipients, triggerSettings, settings));
+    return Automation.fromJson(
+        await (repositories.addAutomation(recipients, triggerSettings, settings)
+            as Future<Map<String, dynamic>>));
   }
 
   Future<Automation> getAutomationInfo({
-    @required id,
-    List<String> fields,
-    List<String> excludeFields,
+    required id,
+    List<String>? fields,
+    List<String>? excludeFields,
   }) async {
-    String getFields = convertListToString(fields);
-    String getExcludedFields = convertListToString(excludeFields);
-    return Automation.fromJson(
-        await repositories.getAutomationInfo(id, fields, excludeFields));
+    String? getFields = convertListToString(fields);
+    String? getExcludedFields = convertListToString(excludeFields);
+    return Automation.fromJson(await (repositories.getAutomationInfo(
+        id, fields, excludeFields) as Future<Map<String, dynamic>>));
   }
 
-  Future<void> startAutomationEmails({@required String id}) async {
+  Future<void> startAutomationEmails({required String id}) async {
     return await repositories.startAutomationEmails(id);
   }
 
-  Future<void> pauseAutomationEmails({@required String id}) async {
+  Future<void> pauseAutomationEmails({required String id}) async {
     return await repositories.pauseAutomationEmails(id);
   }
 
-  Future<void> archiveAutomation({@required String id}) async {
+  Future<void> archiveAutomation({required String id}) async {
     return await repositories.archiveAutomation(id);
   }
 
-  Future<List<AutomatedEmail>> listAutomatedEmails(
-      {@required String id}) async {
-    var res = await repositories.listAutomatedEmails(id);
+  Future<List<AutomatedEmail>> listAutomatedEmails({required String id}) async {
+    var res = await (repositories.listAutomatedEmails(id)
+        as Future<Map<String, dynamic>>);
     return (res['emails'] as List)
         .map((e) => AutomatedEmail.fromMap(e))
         .toList();
   }
 
   Future<AutomatedEmail> getWorkflowEmailInfo(
-      {@required String id, @required String emailId}) async {
-    return AutomatedEmail.fromMap(
-        await repositories.getWorkflowEmailInfo(id, emailId));
+      {required String id, required String emailId}) async {
+    return AutomatedEmail.fromMap(await (repositories.getWorkflowEmailInfo(
+        id, emailId) as Future<Map<String, dynamic>>));
   }
 
   Future<void> deleteWorkflowEmail(
-      {@required String id, @required String emailId}) async {
+      {required String id, required String emailId}) async {
     return await repositories.deleteWorkflowEmail(id, emailId);
   }
 
   Future<AutomatedEmail> updateWorkflowEmail(
-      {@required String workflowId,
-      @required String workflowEmailId,
-      int delayAmount,
-      DelayType delayType,
-      DelayDirection delayDirection,
-      DelayAction delayAction,
-      String subjectLine,
-      String previewText,
-      String title,
-      String fromName,
-      String replyTo}) async {
+      {required String workflowId,
+      required String workflowEmailId,
+      int? delayAmount,
+      DelayType? delayType,
+      DelayDirection? delayDirection,
+      DelayAction? delayAction,
+      String? subjectLine,
+      String? previewText,
+      String? title,
+      String? fromName,
+      String? replyTo}) async {
     String delayTypeText = fetchStringOfEnum(delayType);
     String delayDirectionText = fetchStringOfEnum(delayDirection);
     String delayActionText = fetchStringOfEnum(delayAction);
@@ -168,97 +170,105 @@ class MailChimpMarketingCore {
       "from_name": fromName ?? '',
       "reply_to": replyTo ?? ''
     };
-    return AutomatedEmail.fromMap(await repositories.updateWorkflowEmail(
-        workflowId, workflowEmailId, delay, settings));
+    return AutomatedEmail.fromMap(await (repositories.updateWorkflowEmail(
+            workflowId, workflowEmailId, delay, settings)
+        as Future<Map<String, dynamic>>));
   }
 
   Future<void> pauseAutomatedEmail(
-      {@required String id, @required String emailId}) async {
+      {required String id, required String emailId}) async {
     return await repositories.pauseAutomatedEmail(id, emailId);
   }
 
   Future<void> startAutomatedEmail(
-      {@required String id, @required String emailId}) async {
+      {required String id, required String emailId}) async {
     return await repositories.startAutomatedEmail(id, emailId);
   }
 
   Future<List<EmailSubscriber>> getAutomatedEmailSubscribers(
-      {@required String id, @required String emailId}) async {
-    var res = await repositories.getAutomatedEmailSubscribers(id, emailId);
+      {required String id, required String emailId}) async {
+    var res = await (repositories.getAutomatedEmailSubscribers(id, emailId)
+        as Future<Map<String, dynamic>>);
     return (res['queue'] as List)
         .map((e) => EmailSubscriber.fromMap(e))
         .toList();
   }
 
   Future<EmailSubscriber> addEmailSubscriber(
-      {@required String id,
-      @required String emailId,
-      @required emailAddress}) async {
-    return EmailSubscriber.fromMap(
-        await repositories.addEmailSubscriber(id, emailId, emailAddress));
+      {required String id,
+      required String emailId,
+      required emailAddress}) async {
+    return EmailSubscriber.fromMap(await (repositories.addEmailSubscriber(
+        id, emailId, emailAddress) as Future<Map<String, dynamic>>));
   }
 
   Future<EmailSubscriber> getEmailSubscriber(
-      {@required String id,
-      @required String emailId,
-      @required subscriberHash}) async {
-    return EmailSubscriber.fromMap(
-        await repositories.getEmailSubscriber(id, emailId, subscriberHash));
+      {required String id,
+      required String emailId,
+      required subscriberHash}) async {
+    return EmailSubscriber.fromMap(await (repositories.getEmailSubscriber(
+        id, emailId, subscriberHash) as Future<Map<String, dynamic>>));
   }
 
   Future<List<EmailSubscriber>> getRemovedSubscribers(
-      {@required String id}) async {
-    var res = await repositories.getRemovedSubscribers(id);
+      {required String id}) async {
+    var res = await (repositories.getRemovedSubscribers(id)
+        as Future<Map<String, dynamic>>);
     return (res['subscribers'] as List)
         .map((e) => EmailSubscriber.fromMap(e))
         .toList();
   }
 
   Future<EmailSubscriber> removeSubscriber(
-      {@required String id, @required String emailAddress}) async {
-    return EmailSubscriber.fromMap(
-        await repositories.removeSubscriber(id, emailAddress));
+      {required String id, required String emailAddress}) async {
+    return EmailSubscriber.fromMap(await (repositories.removeSubscriber(
+        id, emailAddress) as Future<Map<String, dynamic>>));
   }
 
   Future<EmailSubscriber> getRemovedSubscriber(
-      {@required String id, @required String subscriberHash}) async {
-    return EmailSubscriber.fromMap(
-        await repositories.getRemovedSubscriber(id, subscriberHash));
+      {required String id, required String subscriberHash}) async {
+    return EmailSubscriber.fromMap(await (repositories.getRemovedSubscriber(
+        id, subscriberHash) as Future<Map<String, dynamic>>));
   }
 
   Future<List<BatchOperation>> getBatchRequests(
-      {List<String> fields,
-      List<String> excludeFields,
-      int count,
-      int offset}) async {
-    var res = await repositories.getBatchRequests(
-        fields, excludeFields, count, offset);
+      {List<String>? fields,
+      List<String>? excludeFields,
+      int? count,
+      int? offset}) async {
+    var res = await (repositories.getBatchRequests(
+        fields, excludeFields, count, offset) as Future<Map<String, dynamic>>);
     return (res['batches'] as List)
         .map((e) => BatchOperation.fromMap(e))
         .toList();
   }
 
   Future<BatchOperation> startBatchOperations({
-    @required RequestType requestMethod,
-    @required String path,
-    @required Map<String, dynamic> jsonBody,
-    @required String operationId,
-    int count,
-    int offset,
+    required RequestType requestMethod,
+    required String path,
+    required Map<String, dynamic> jsonBody,
+    required String operationId,
+    int? count,
+    int? offset,
   }) async {
     String requestMethodString = fetchStringOfEnum(requestMethod);
     String jsonBodyString = jsonEncode(jsonBody);
-    return BatchOperation.fromMap(await repositories.startBatchOperations(
-        requestMethodString, path, count, offset, jsonBodyString, operationId));
+    return BatchOperation.fromMap(await (repositories.startBatchOperations(
+        requestMethodString,
+        path,
+        count,
+        offset,
+        jsonBodyString,
+        operationId) as Future<Map<String, dynamic>>));
   }
 
   Future<BatchOperation> getBatchOperationStatus({
-    @required String batchId,
-    List<String> fields,
-    List<String> excludeFields,
+    required String batchId,
+    List<String>? fields,
+    List<String>? excludeFields,
   }) async {
-    return BatchOperation.fromMap(await repositories.getBatchOperationStatus(
-        batchId, fields, excludeFields));
+    return BatchOperation.fromMap(await (repositories.getBatchOperationStatus(
+        batchId, fields, excludeFields) as Future<Map<String, dynamic>>));
   }
 
   Future<void> deleteBatchRequest(String batchId) async {
@@ -266,33 +276,35 @@ class MailChimpMarketingCore {
   }
 
   Future<List<BatchWebhook>> getBatchWebhooks(
-      {List<String> fields,
-      List<String> excludedFields,
-      int count,
-      int offset}) async {
-    var res = await repositories.getBatchWebhooks(
-        fields, excludedFields, count, offset);
+      {List<String>? fields,
+      List<String>? excludedFields,
+      int? count,
+      int? offset}) async {
+    var res = await (repositories.getBatchWebhooks(
+        fields, excludedFields, count, offset) as Future<Map<String, dynamic>>);
     return (res['webhooks'] as List)
         .map((e) => BatchWebhook.fromMap(e))
         .toList();
   }
 
   Future<BatchWebhook> addBatchWebhook(String url) async {
-    return BatchWebhook.fromMap(await repositories.addBatchWebhook(url));
+    return BatchWebhook.fromMap(await (repositories.addBatchWebhook(url)
+        as Future<Map<String, dynamic>>));
   }
 
   Future<BatchWebhook> getBatchWebhookInfo(
-      {String batchWebhookId,
-      List<String> fields,
-      List<String> excludedFields}) async {
-    return BatchWebhook.fromMap(await repositories.getBatchWebhookInfo(
-        batchWebhookId, fields, excludedFields));
+      {String? batchWebhookId,
+      List<String>? fields,
+      List<String>? excludedFields}) async {
+    return BatchWebhook.fromMap(await (repositories.getBatchWebhookInfo(
+            batchWebhookId, fields, excludedFields)
+        as Future<Map<String, dynamic>>));
   }
 
   Future<BatchWebhook> updateBatchWebhook(
-      {String batchWebhookId, String url}) async {
-    return BatchWebhook.fromMap(
-        await repositories.updateBatchWebhook(batchWebhookId, url));
+      {String? batchWebhookId, String? url}) async {
+    return BatchWebhook.fromMap(await (repositories.updateBatchWebhook(
+        batchWebhookId, url) as Future<Map<String, dynamic>>));
   }
 
   Future<void> deleteBatchWebhook(String batchWebhookId) async {
@@ -300,33 +312,34 @@ class MailChimpMarketingCore {
   }
 
   Future<List<CampaignFolder>> getCampaignFolders(
-      {List<String> fields,
-      List<String> excludedFields,
-      int count,
-      int offset}) async {
-    var res = await repositories.getCampaignFolders(
-        fields, excludedFields, count, offset);
+      {List<String>? fields,
+      List<String>? excludedFields,
+      int? count,
+      int? offset}) async {
+    var res = await (repositories.getCampaignFolders(
+        fields, excludedFields, count, offset) as Future<Map<String, dynamic>>);
     return (res['folders'] as List)
         .map((e) => CampaignFolder.fromMap(e))
         .toList();
   }
 
   Future<CampaignFolder> addCampaignFolder(String name) async {
-    return CampaignFolder.fromMap(await repositories.addCampaignFolder(name));
+    return CampaignFolder.fromMap(await (repositories.addCampaignFolder(name)
+        as Future<Map<String, dynamic>>));
   }
 
   Future<CampaignFolder> getCampaignFolderInfo(
-      {String folderId,
-      List<String> fields,
-      List<String> excludedFields}) async {
-    return CampaignFolder.fromMap(await repositories.getCampaignFolderInfo(
-        folderId, fields, excludedFields));
+      {String? folderId,
+      List<String>? fields,
+      List<String>? excludedFields}) async {
+    return CampaignFolder.fromMap(await (repositories.getCampaignFolderInfo(
+        folderId, fields, excludedFields) as Future<Map<String, dynamic>>));
   }
 
   Future<CampaignFolder> updateCampaignFolder(
-      {String folderId, String name}) async {
-    return CampaignFolder.fromMap(
-        await repositories.updateCampaignFolder(folderId, name));
+      {String? folderId, String? name}) async {
+    return CampaignFolder.fromMap(await (repositories.updateCampaignFolder(
+        folderId, name) as Future<Map<String, dynamic>>));
   }
 
   Future<void> deleteCampaignFolder(String folderId) async {
@@ -334,22 +347,22 @@ class MailChimpMarketingCore {
   }
 
   Future<List<Campaign>> getCampaigns(
-      List<String> fields,
-      List<String> excludedFields,
-      int count,
-      int offset,
-      CampaignType type,
-      CampaignStatus status,
-      String beforeSendTime,
-      String sinceSendTime,
-      String beforeCreateTime,
-      String sinceCreateTime,
-      String listId,
-      String folderId,
-      String memberId,
-      CampaignSortField sortField,
-      CampaignSortDir sortDir) async {
-    var res = await repositories.getCampaigns(
+      List<String>? fields,
+      List<String>? excludedFields,
+      int? count,
+      int? offset,
+      CampaignType? type,
+      CampaignStatus? status,
+      String? beforeSendTime,
+      String? sinceSendTime,
+      String? beforeCreateTime,
+      String? sinceCreateTime,
+      String? listId,
+      String? folderId,
+      String? memberId,
+      CampaignSortField? sortField,
+      CampaignSortDir? sortDir) async {
+    var res = await (repositories.getCampaigns(
         fields,
         excludedFields,
         count,
@@ -364,63 +377,63 @@ class MailChimpMarketingCore {
         folderId,
         memberId,
         fetchStringOfEnum(sortField),
-        fetchStringOfEnum(sortDir));
+        fetchStringOfEnum(sortDir)) as Future<Map<String, dynamic>>);
 
     return (res['campaigns'] as List).map((e) => Campaign.fromMap(e)).toList();
   }
 
   Future<Campaign> addCampaign(
       CampaignType type,
-      int hour,
-      bool sunday,
-      bool monday,
-      bool tuesday,
-      bool wednesday,
-      bool thursday,
-      bool friday,
-      bool saturday,
-      CampaignWeekDay weeklySendDay,
-      int monthlySendDate,
-      bool constrainRssImg,
-      String feedUrl,
-      CampaignFrequency frequency,
-      int savedSegmentId,
-      String prebuiltSegmentId,
-      CampaignSegmentType match,
-      List<dynamic> conditions,
-      String listId,
-      int waitTime,
-      int testSize,
-      List<String> subjectLines,
-      List<String> sendTimes,
-      List<String> fromNames,
-      List<String> replyToAddresses,
-      CampaignWinnerCriteria winnerCriteria,
-      String subjectLine,
-      String previewText,
-      String title,
-      String fromName,
-      String replyTo,
-      bool useConversation,
-      String toName,
-      String folderId,
-      bool authenticate,
-      bool autoFooter,
-      bool inlineCss,
-      bool autoTweet,
-      List<String> autoFbPost,
-      bool fbComments,
-      int templateId,
-      bool opens,
-      bool htmlClicks,
-      bool textClicks,
-      bool ecomm360,
-      String googleAnalytics,
-      String clicktale,
-      String imageUrl,
-      String description,
-      String socialCardTitle,
-      CampaignContentType campaignContentType) async {
+      int? hour,
+      bool? sunday,
+      bool? monday,
+      bool? tuesday,
+      bool? wednesday,
+      bool? thursday,
+      bool? friday,
+      bool? saturday,
+      CampaignWeekDay? weeklySendDay,
+      int? monthlySendDate,
+      bool? constrainRssImg,
+      String? feedUrl,
+      CampaignFrequency? frequency,
+      int? savedSegmentId,
+      String? prebuiltSegmentId,
+      CampaignSegmentType? match,
+      List<dynamic>? conditions,
+      String? listId,
+      int? waitTime,
+      int? testSize,
+      List<String>? subjectLines,
+      List<String>? sendTimes,
+      List<String>? fromNames,
+      List<String>? replyToAddresses,
+      CampaignWinnerCriteria? winnerCriteria,
+      String? subjectLine,
+      String? previewText,
+      String? title,
+      String? fromName,
+      String? replyTo,
+      bool? useConversation,
+      String? toName,
+      String? folderId,
+      bool? authenticate,
+      bool? autoFooter,
+      bool? inlineCss,
+      bool? autoTweet,
+      List<String>? autoFbPost,
+      bool? fbComments,
+      int? templateId,
+      bool? opens,
+      bool? htmlClicks,
+      bool? textClicks,
+      bool? ecomm360,
+      String? googleAnalytics,
+      String? clicktale,
+      String? imageUrl,
+      String? description,
+      String? socialCardTitle,
+      CampaignContentType? campaignContentType) async {
     Map<String, dynamic> socialCard = {
       "image_url": imageUrl,
       "description": description,
@@ -489,144 +502,151 @@ class MailChimpMarketingCore {
         "conditions": conditions
       }
     };
-    return Campaign.fromMap(await repositories.addCampaign(
-        fetchStringOfEnum(type),
+    return Campaign.fromMap(await (repositories.addCampaign(
+            fetchStringOfEnum(type),
+            rssOpts,
+            recipients,
+            variateSettings,
+            settings,
+            tracking,
+            socialCard,
+            fetchStringOfEnum(campaignContentType))
+        as Future<Map<String, dynamic>>));
+  }
+
+  Future<Campaign> getCampaignInfo(String campaignId, List<String>? fields,
+      List<String>? excludedFields) async {
+    return Campaign.fromMap(await (repositories.getCampaignInfo(
+        campaignId, fields, excludedFields) as Future<Map<String, dynamic>>));
+  }
+
+  Future<Campaign> updateCampaign(
+      String campaignId,
+      int? hour,
+      bool? sunday,
+      bool? monday,
+      bool? tuesday,
+      bool? wednesday,
+      bool? thursday,
+      bool? friday,
+      bool? saturday,
+      CampaignWeekDay? weeklySendDay,
+      int? monthlySendDate,
+      bool? constrainRssImg,
+      String? feedUrl,
+      CampaignFrequency? frequency,
+      int? savedSegmentId,
+      String? prebuiltSegmentId,
+      CampaignSegmentType? match,
+      List<dynamic>? conditions,
+      String? listId,
+      int? waitTime,
+      int? testSize,
+      List<String>? subjectLines,
+      List<String>? sendTimes,
+      List<String>? fromNames,
+      List<String>? replyToAddresses,
+      CampaignWinnerCriteria? winnerCriteria,
+      String? subjectLine,
+      String? previewText,
+      String? title,
+      String? fromName,
+      String? replyTo,
+      bool? useConversation,
+      String? toName,
+      String? folderId,
+      bool? authenticate,
+      bool? autoFooter,
+      bool? inlineCss,
+      bool? autoTweet,
+      List<String>? autoFbPost,
+      bool? fbComments,
+      int? templateId,
+      bool? opens,
+      bool? htmlClicks,
+      bool? textClicks,
+      bool? ecomm360,
+      String? googleAnalytics,
+      String? clicktale,
+      String? imageUrl,
+      String? description,
+      String? socialCardTitle) async {
+    Map<String, dynamic> socialCard = {
+      "image_url": imageUrl,
+      "description": description,
+      "title": socialCardTitle
+    };
+    Map<String, dynamic> settings = {
+      "subject_line": subjectLine,
+      "preview_text": previewText,
+      "title": title,
+      "from_name": fromName,
+      "reply_to": replyTo,
+      "use_conversation": useConversation,
+      "to_name": toName,
+      "folder_id": folderId,
+      "authenticate": authenticate,
+      "auto_footer": autoFooter,
+      "inline_css": inlineCss,
+      "auto_tweet": autoTweet,
+      "auto_fb_post": autoFbPost,
+      "fb_comments": fbComments,
+      "template_id": templateId,
+    };
+    Map<String, dynamic> tracking = {
+      "opens": opens,
+      "html_clicks": htmlClicks,
+      "text_clicks": textClicks,
+      "ecomm360": ecomm360,
+      "google_analytics": googleAnalytics,
+      "clicktale": clicktale,
+    };
+    Map<String, dynamic> variateSettings = {
+      "winner_criteria": fetchStringOfEnum(winnerCriteria),
+      "wait_time": waitTime,
+      "test_size": testSize,
+      "subject_lines": subjectLines,
+      "send_times": sendTimes,
+      "from_names": fromNames,
+      "reply_to_addresses": replyToAddresses
+    };
+    Map<String, dynamic> rssOpts = {
+      "feed_url": feedUrl,
+      "frequency": fetchStringOfEnum(frequency),
+      "schedule": {
+        "hour": hour,
+        "daily_send": {
+          "sunday": sunday,
+          "monday": monday,
+          "tuesday": tuesday,
+          "wednesday": wednesday,
+          "thursday": thursday,
+          "friday": friday,
+          "saturday": saturday
+        },
+        "weekly_send_day": fetchStringOfEnum(weeklySendDay),
+        "monthly_send_date": monthlySendDate
+      },
+      "constrain_rss_img": constrainRssImg
+    };
+
+    Map<String, dynamic> recipients = {
+      "list_id": listId,
+      "segment_opts": {
+        "saved_segment_id": savedSegmentId,
+        "prebuilt_segment_id": prebuiltSegmentId,
+        "match": fetchStringOfEnum(match),
+        "conditions": conditions
+      }
+    };
+    return Campaign.fromMap(await (repositories.updateCampaign(
+        campaignId,
         rssOpts,
         recipients,
         variateSettings,
         settings,
         tracking,
-        socialCard,
-        fetchStringOfEnum(campaignContentType)));
-  }
-
-  Future<Campaign> getCampaignInfo(String campaignId, List<String> fields,
-      List<String> excludedFields) async {
-    return Campaign.fromMap(
-        await repositories.getCampaignInfo(campaignId, fields, excludedFields));
-  }
-
-  Future<Campaign> updateCampaign(
-      String campaignId,
-      int hour,
-      bool sunday,
-      bool monday,
-      bool tuesday,
-      bool wednesday,
-      bool thursday,
-      bool friday,
-      bool saturday,
-      CampaignWeekDay weeklySendDay,
-      int monthlySendDate,
-      bool constrainRssImg,
-      String feedUrl,
-      CampaignFrequency frequency,
-      int savedSegmentId,
-      String prebuiltSegmentId,
-      CampaignSegmentType match,
-      List<dynamic> conditions,
-      String listId,
-      int waitTime,
-      int testSize,
-      List<String> subjectLines,
-      List<String> sendTimes,
-      List<String> fromNames,
-      List<String> replyToAddresses,
-      CampaignWinnerCriteria winnerCriteria,
-      String subjectLine,
-      String previewText,
-      String title,
-      String fromName,
-      String replyTo,
-      bool useConversation,
-      String toName,
-      String folderId,
-      bool authenticate,
-      bool autoFooter,
-      bool inlineCss,
-      bool autoTweet,
-      List<String> autoFbPost,
-      bool fbComments,
-      int templateId,
-      bool opens,
-      bool htmlClicks,
-      bool textClicks,
-      bool ecomm360,
-      String googleAnalytics,
-      String clicktale,
-      String imageUrl,
-      String description,
-      String socialCardTitle) async {
-    Map<String, dynamic> socialCard = {
-      "image_url": imageUrl,
-      "description": description,
-      "title": socialCardTitle
-    };
-    Map<String, dynamic> settings = {
-      "subject_line": subjectLine,
-      "preview_text": previewText,
-      "title": title,
-      "from_name": fromName,
-      "reply_to": replyTo,
-      "use_conversation": useConversation,
-      "to_name": toName,
-      "folder_id": folderId,
-      "authenticate": authenticate,
-      "auto_footer": autoFooter,
-      "inline_css": inlineCss,
-      "auto_tweet": autoTweet,
-      "auto_fb_post": autoFbPost,
-      "fb_comments": fbComments,
-      "template_id": templateId,
-    };
-    Map<String, dynamic> tracking = {
-      "opens": opens,
-      "html_clicks": htmlClicks,
-      "text_clicks": textClicks,
-      "ecomm360": ecomm360,
-      "google_analytics": googleAnalytics,
-      "clicktale": clicktale,
-    };
-    Map<String, dynamic> variateSettings = {
-      "winner_criteria": fetchStringOfEnum(winnerCriteria),
-      "wait_time": waitTime,
-      "test_size": testSize,
-      "subject_lines": subjectLines,
-      "send_times": sendTimes,
-      "from_names": fromNames,
-      "reply_to_addresses": replyToAddresses
-    };
-    Map<String, dynamic> rssOpts = {
-      "feed_url": feedUrl,
-      "frequency": fetchStringOfEnum(frequency),
-      "schedule": {
-        "hour": hour,
-        "daily_send": {
-          "sunday": sunday,
-          "monday": monday,
-          "tuesday": tuesday,
-          "wednesday": wednesday,
-          "thursday": thursday,
-          "friday": friday,
-          "saturday": saturday
-        },
-        "weekly_send_day": fetchStringOfEnum(weeklySendDay),
-        "monthly_send_date": monthlySendDate
-      },
-      "constrain_rss_img": constrainRssImg
-    };
-
-    Map<String, dynamic> recipients = {
-      "list_id": listId,
-      "segment_opts": {
-        "saved_segment_id": savedSegmentId,
-        "prebuilt_segment_id": prebuiltSegmentId,
-        "match": fetchStringOfEnum(match),
-        "conditions": conditions
-      }
-    };
-    return Campaign.fromMap(await repositories.updateCampaign(campaignId,
-        rssOpts, recipients, variateSettings, settings, tracking, socialCard));
+        socialCard) as Future<Map<String, dynamic>>));
   }
 
   Future<void> deleteCampaign(String campaignId) async {
@@ -641,8 +661,8 @@ class MailChimpMarketingCore {
     return await repositories.sendCampaign(campaignId);
   }
 
-  Future<void> scheduleCampaign(String campaignId, String scheduleTime,
-      int batchDelay, int batchCount, bool timewarp) async {
+  Future<void> scheduleCampaign(String campaignId, String? scheduleTime,
+      int? batchDelay, int? batchCount, bool? timewarp) async {
     var batchDelivery = {"batch_delay": batchDelay, "batch_count": batchCount};
     return await repositories.scheduleCampaign(
         campaignId, scheduleTime, batchDelivery, timewarp);
@@ -661,35 +681,37 @@ class MailChimpMarketingCore {
   }
 
   Future<Campaign> replicateCampaign(String campaignId) async {
-    return Campaign.fromMap(await repositories.replicateCampaign(campaignId));
+    return Campaign.fromMap(await (repositories.replicateCampaign(campaignId)
+        as Future<Map<String, dynamic>>));
   }
 
-  Future<void> sendTestEmail(String campaignId, List<String> testEmails,
-      CampaignTestEmailSendType sendType) async {
+  Future<void> sendTestEmail(String campaignId, List<String>? testEmails,
+      CampaignTestEmailSendType? sendType) async {
     return await repositories.sendTestEmail(
         campaignId, testEmails, fetchStringOfEnum(sendType));
   }
 
   Future<Campaign> resendCampaign(String campaignId) async {
-    return Campaign.fromMap(await repositories.resendCampaign(campaignId));
+    return Campaign.fromMap(await (repositories.resendCampaign(campaignId)
+        as Future<Map<String, dynamic>>));
   }
 
   Future<CampaignContent> getCampaignContent(String campaignId,
-      List<String> fields, List<String> excludeFields) async {
-    return CampaignContent.fromMap(await repositories.getCampaignContent(
-        campaignId, fields, excludeFields));
+      List<String>? fields, List<String>? excludeFields) async {
+    return CampaignContent.fromMap(await (repositories.getCampaignContent(
+        campaignId, fields, excludeFields) as Future<Map<String, dynamic>>));
   }
 
   Future<CampaignContent> setCampaignContent(
-      String campaignId,
-      CampaignContentArchiveType archiveType,
+      String? campaignId,
+      CampaignContentArchiveType? archiveType,
       String archiveContent,
-      Map<String, dynamic> sections,
+      Map<String, dynamic>? sections,
       String templateId,
-      String plainText,
-      String html,
-      String url,
-      String contentLabel) async {
+      String? plainText,
+      String? html,
+      String? url,
+      String? contentLabel) async {
     Map<String, dynamic> template = {"id": templateId, "sections": sections};
     Map<String, dynamic> archive = {
       "archive_content": archiveContent,
@@ -703,45 +725,59 @@ class MailChimpMarketingCore {
       html,
       url
     ];
-    return CampaignContent.fromMap(await repositories.setCampaignContent(
-        campaignId, archive, template, plainText, html, url, variateContents));
+    return CampaignContent.fromMap(await (repositories.setCampaignContent(
+            campaignId,
+            archive as Map<String, String>,
+            template,
+            plainText,
+            html,
+            url,
+            variateContents as List<Map<String, dynamic>?>)
+        as Future<Map<String, dynamic>>));
   }
 
   Future<List<CampaignFeedback>> getCampaignFeedback(String campaignId,
-      List<String> fields, List<String> excludeFields) async {
-    var res = await repositories.getCampaignFeedback(
-        campaignId, fields, excludeFields);
+      List<String>? fields, List<String>? excludeFields) async {
+    var res = await (repositories.getCampaignFeedback(
+        campaignId, fields, excludeFields) as Future<Map<String, dynamic>>);
     return (res['feedback'] as List)
         .map((e) => CampaignFeedback.fromMap(e))
         .toList();
   }
 
   Future<CampaignFeedback> addCampaignFeedback(
-      String campaignId, String message, int blockId, bool isComplete) async {
-    return CampaignFeedback.fromMap(await repositories.addCampaignFeedback(
-        campaignId, message, blockId, isComplete));
+      String campaignId, String message, int? blockId, bool? isComplete) async {
+    return CampaignFeedback.fromMap(await (repositories.addCampaignFeedback(
+            campaignId, message, blockId, isComplete)
+        as Future<Map<String, dynamic>>));
   }
 
   Future<CampaignFeedback> getCampaignFeedbackMessage(
       String campaignId,
       String feedbackId,
-      List<String> fields,
-      List<String> excludeFields) async {
+      List<String>? fields,
+      List<String>? excludeFields) async {
     return CampaignFeedback.fromMap(
-        await repositories.getCampaignFeedbackMessage(
-            campaignId, feedbackId, fields, excludeFields));
+        await (repositories.getCampaignFeedbackMessage(
+                campaignId, feedbackId, fields, excludeFields)
+            as Future<Map<String, dynamic>>));
   }
 
-  Future<CampaignFeedback> updateCampaignFeedback(String campaignId,
-      String feedbackId, String message, int blockId, bool isComplete) async{
-
-    return CampaignFeedback.fromMap(await repositories.updateCampaignFeedback(campaignId, feedbackId, message, blockId, isComplete));
+  Future<CampaignFeedback> updateCampaignFeedback(
+      String campaignId,
+      String feedbackId,
+      String? message,
+      int? blockId,
+      bool? isComplete) async {
+    return CampaignFeedback.fromMap(await (repositories.updateCampaignFeedback(
+            campaignId, feedbackId, message, blockId, isComplete)
+        as Future<Map<String, dynamic>>));
   }
 
   Future<void> deleteCampaignFeedback(
-      String campaignId,
-      String feedbackId,
-      ) async{
+    String campaignId,
+    String feedbackId,
+  ) async {
     return await repositories.deleteCampaignFeedback(campaignId, feedbackId);
   }
 }
