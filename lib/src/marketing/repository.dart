@@ -28,12 +28,21 @@ class MarketingRepositories {
       {int successCode = 200}) async {
     try {
       String base = baseUrl.replaceAll("<dc>", "$server");
-      var uri = Uri.https('$base', endpoint, queryParameters);
+      late Uri uri;
+      if (type != RequestType.POST) {
+        uri = Uri.https('$base', endpoint, queryParameters);
+      } else {
+        uri = Uri.https(
+          '$base',
+          endpoint,
+        );
+      }
 
       final response = type == RequestType.GET
           ? await get(uri, headers: headers)
           : type == RequestType.POST
-              ? await post(uri, headers: headers)
+              ? await post(uri,
+                  headers: headers, body: jsonEncode(queryParameters))
               : type == RequestType.DELETE
                   ? await delete(uri, headers: headers)
                   : type == RequestType.PUT
